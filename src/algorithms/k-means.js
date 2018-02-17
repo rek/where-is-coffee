@@ -4,10 +4,10 @@ import ML from 'ml'
 
 const kmeans = (state) => ({
 	start: (data) => {
-		console.log('starting: ' + state.name)
+		console.log('state', state);
 		console.log('with data:', data);
 
-		console.log('ML', ML);
+		// console.log('ML', ML);
 
 		let tempdata = [[1, 1, 1], [1, 2, 1], [-1, -1, -1], [-1, -1, -1.5]];
 		let centers = [[1, 2, 1], [-1, -1, -1]];
@@ -20,13 +20,15 @@ const kmeans = (state) => ({
 
 	draw() {
 	    const context = state.canvas.getContext('2d');
+	    console.log('context', context);
 
 	    const height = 500
 	    const width = 500
 
 		context.clearRect(0, 0, width, height);
-		context.globalAlpha = 0.3;
+		// context.globalAlpha = 0.3;
 
+/*
 		context.save();
         context.strokeStyle = 'blue';
         context.beginPath();
@@ -53,14 +55,21 @@ const kmeans = (state) => ({
         context.closePath();
 
         context.restore();
-
-        d(context, 0.1, 1.4)
+*/
+        drawPoint(0.1, 1.4, context)
+        drawPoint(1, 2, context)
+        drawPoint(100, 20, context)
 
 	},
 })
 
+function drawPoint(x, y, canvas){
+	canvas.fillRect(x, y, 1, 1)
+}
+
 const d = (ctx, x, y) => {
 	ctx.save();
+
 
 	ctx.strokeStyle = '#333333';
 	ctx.translate(x, y);
