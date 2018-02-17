@@ -1,15 +1,33 @@
-import data from './data/data'
-import kmeans from './algorithims/k-means'
+import React from 'react';
 
-console.log('data', data);
-console.log('kmeans', kmeans);
+import dataManager from '../data/dataManager'
+import kmeans from '../algorithms/k-means'
 
-export default () =>
-	<div>
-		<h1>Which food is good?</h1>
+// console.log('dataManager', dataManager);
+// console.log('kmeans', kmeans);
 
-		<canvas
-			width='500'
-			height='500'
-		/>
-	</div>
+class KMeans extends React.Component {
+	componentDidMount() {
+		dataManager.fetch().then((data) => {
+			// console.log('Found data:', data);
+
+			kmeans.start(data)
+		})
+	}
+
+	render() {
+		return (
+			<div>
+				<h1>have a start button here</h1>
+
+				<canvas
+					width='500'
+					height='500'
+				/>
+			</div>
+
+		)
+	}
+}
+
+export default KMeans

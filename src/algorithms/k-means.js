@@ -1,10 +1,13 @@
 // http://burakkanber.com/blog/machine-learning-k-means-clustering-in-javascript-part-1/
 
-const barker = (state) => ({
-	bark: () => console.log('Woof, I am ' + state.name)
+const kmeans = (state) => ({
+	start: (data) => {
+		console.log('starting: ' + state.name)
+		console.log('with data:', data);
+	}
 })
 
-const murderRobotDog = (name)  => {
+const cluster = (name)  => {
 	let state = {
 		name,
 		speed: 100,
@@ -13,12 +16,10 @@ const murderRobotDog = (name)  => {
 
   return Object.assign(
         {},
-        barker(state),
-        driver(state),
-        killer(state)
+        kmeans(state),
     )
 }
 
-const bruno =  murderRobotDog('bruno')
+const kmeansClustering = cluster('kmeans')
 
-bruno.bark() // "Woof, I am Bruno"
+export default kmeansClustering
