@@ -1,8 +1,8 @@
 import React from 'react';
 
 import dataManager from '../data/dataManager'
-import kmeans from '../algorithms/k-means'
-
+import kmeansClusterer from '../algorithms/k-means'
+import './k-means.styles.css'
 // console.log('dataManager', dataManager);
 // console.log('kmeans', kmeans);
 
@@ -11,6 +11,7 @@ class KMeans extends React.Component {
 		dataManager.fetch().then((data) => {
 			// console.log('Found data:', data);
 
+			const kmeans = kmeansClusterer(this.canvas)
 			kmeans.start(data)
 		})
 	}
@@ -18,9 +19,10 @@ class KMeans extends React.Component {
 	render() {
 		return (
 			<div>
-				<h1>have a start button here</h1>
+				<h1>we should have a start button here</h1>
 
 				<canvas
+					ref={(el) => this.canvas = el}
 					width='500'
 					height='500'
 				/>
