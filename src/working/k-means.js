@@ -28,7 +28,7 @@ class KMeans extends React.Component {
 
 		return (
 			<div>
-				<h1>we should have a start button here</h1>
+				<h1>Results:</h1>
 
 				{loading &&
 					<div>
