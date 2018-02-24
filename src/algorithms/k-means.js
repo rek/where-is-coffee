@@ -1,20 +1,35 @@
 // http://burakkanber.com/blog/machine-learning-k-means-clustering-in-javascript-part-1/
 // https://github.com/mljs/kmeans
 // http://mlweb.loria.fr/demos/mljs-tutorial-clustering.html
+import {
+	map,
+} from 'lodash'
 import ML from 'ml'
+
+import normalize from 'array-normalize'
 
 const kmeans = (state) => ({
 	start: (data) => {
 		console.log('state', state);
 		console.log('with data:', data);
 
+		const statsData = map(data, (item) => {
+			return item.rating
+		})
+		// console.log('statsData', statsData);
+		const normalisedData = normalize(statsData)
+		// console.log('normalisedData', normalisedData);
+
 		// console.log('ML', ML);
 
 		const scale = 500
 
 		// [price, quantity, quality]
-		let tempdata = [[1, 1, 1], [1, 2, 1], [-1, -1, -1], [-1, -1, -1.5]];
-		let centers = [[1, 2, 1], [-1, -1, -1]];
+
+		let tempdata = normalisedData;
+		let centers = [0, 1];
+		// let tempdata = [[1, 1, 1], [1, 2, 1], [-1, -1, -1], [-1, -1, -1.5]];
+		// let centers = [[1, 2, 1], [-1, -1, -1]];
 
 		state.results = ML.Clust.kmeans(tempdata, 2, {initialization: centers});
 		console.log('state.results', state.results);
@@ -64,6 +79,25 @@ const kmeans = (state) => ({
 
 	},
 })
+
+const drawLine = (startX, startY, endX, endY, canvas) => {
+    context.strokeStyle = 'blue';
+    context.beginPath();
+
+    context.moveTo(
+		startX,
+		startY,
+    );
+    context.lineTo(
+       endX,
+       endY,
+    );
+
+    context.stroke();
+    context.closePath();
+
+    context.restore();
+}
 
 function drawPoint(x, y, canvas){
 	canvas.fillRect(x, y, 10, 10)
