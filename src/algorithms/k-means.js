@@ -3,33 +3,73 @@
 // http://mlweb.loria.fr/demos/mljs-tutorial-clustering.html
 import {
 	map,
+	each,
+	times,
+	unzip,
 } from 'lodash'
 import ML from 'ml'
 
 import normalize from 'array-normalize'
+
+const normalizeArray = (data) => {
+	// console.log('data', data);
+	// fields we will be normalizing
+	const fields = []
+	const normalizedFields = []
+
+	// find internal size
+	const amountOfFields = data[0].length
+	// console.log('amountOfFields', amountOfFields);
+
+	// add right amount of fields we will track
+	times(amountOfFields, () => fields.push([]))
+	// console.log('fields', fields);
+
+	// put data into the right places
+	each(data, (item) => {
+		// console.log('item', item);
+		times(amountOfFields, (index) => {
+			// console.log('item[index]', item[index]);
+			fields[index].push(item[index])
+		})
+	})
+
+	times(amountOfFields, (index) => {
+		normalizedFields[index] = normalize(fields[index])
+	})
+
+	return normalizedFields
+}
 
 const kmeans = (state) => ({
 	start: (data) => {
 		console.log('state', state);
 		console.log('with data:', data);
 
+		const ratings = []
+		const lats = []
+		const longs = []
 		const statsData = map(data, (item) => {
-			return item.rating
+			return [item.rating, item.geometry.location.lat, item.geometry.location.lng]
 		})
-		// console.log('statsData', statsData);
-		const normalisedData = normalize(statsData)
-		// console.log('normalisedData', normalisedData);
+
+		const normalisedData = normalizeArray(statsData)
+
+		// const normalisedLongs = normalize(statsData)
+		console.log('normalisedData', normalisedData);
+		console.log('mixed together', unzip(normalisedData));
 
 		// console.log('ML', ML);
 
 		const scale = 500
 
 		// [price, quantity, quality]
+		// [price, lat, long]
 
-		let tempdata = normalisedData;
-		let centers = [0, 1];
+		let tempdata = unzip(normalisedData);
+		// let centers = [0, 1];
 		// let tempdata = [[1, 1, 1], [1, 2, 1], [-1, -1, -1], [-1, -1, -1.5]];
-		// let centers = [[1, 2, 1], [-1, -1, -1]];
+		let centers = [[1, 1, 1], [-1, -1, -1]];
 
 		state.results = ML.Clust.kmeans(tempdata, 2, {initialization: centers});
 		console.log('state.results', state.results);
@@ -80,7 +120,7 @@ const kmeans = (state) => ({
 	},
 })
 
-const drawLine = (startX, startY, endX, endY, canvas) => {
+const drawLine = (startX, startY, endX, endY, context) => {
     context.strokeStyle = 'blue';
     context.beginPath();
 
