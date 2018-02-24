@@ -1,3 +1,3 @@
-# where-is-coffee
+# Where is Coffee?
 
-Coffee rating and tracking in Kathmandu
+Coffee rating and tracking in Kathmandu. ☕️*कहां छ?*
