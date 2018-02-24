@@ -1,4 +1,4 @@
-import staticData from './static'
+// import staticData from './static'
 import placesData from './placesData'
 
 // get visited data from somewhere????

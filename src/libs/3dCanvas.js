@@ -140,11 +140,13 @@ Surface.prototype.multi = function(R) {
 	let P = this.points; // P is a pointer to the set of surface points (i.e., the set of 3 x 1 vectors).
 	let sum; // The sum for each row/column matrix product.
 
-	for (let V = 0; V < P.length; V++) // For all 3 x 1 vectors in the point list.
-	{
-		Px = P[V][X], Py = P[V][Y], Pz = P[V][Z];
-		for (let Rrow = 0; Rrow < 3; Rrow++) // For each row in the R matrix.
-		{
+	// For all 3 x 1 vectors in the point list.
+	for (let V = 0; V < P.length; V++) {
+		Px = P[V][X]
+		Py = P[V][Y]
+		Pz = P[V][Z]
+		// For each row in the R matrix.
+		for (let Rrow = 0; Rrow < 3; Rrow++) {
 			sum = (R[Rrow][X] * Px) + (R[Rrow][Y] * Py) + (R[Rrow][Z] * Pz);
 			P[V][Rrow] = sum;
 		}
@@ -259,6 +261,7 @@ const processKeyDown = (surface) => (evt) => {
 				surface.zRotate(1);
 				evt.preventDefault();
 				break;
+			default: break;
 		}
 		return; // When the control key is pressed, only the left and right arrows have meaning, no need to process any other key strokes (i.e., bail now).
 	}
@@ -285,6 +288,7 @@ const processKeyDown = (surface) => (evt) => {
 			surface.yRotate(1);
 			evt.preventDefault();
 			break;
+		default: break;
 	}
 }
 
